@@ -45,12 +45,20 @@ app.post("/", function(req, res){
 
     const options = {
         method: "POST",
-        auth: "vbar1:aaab0770637717bffd5bd5349cc81aba-us21"
+        auth: "vbar1:baaab0770637717bffd5bd5349cc81aba-us21"
     }
 
     const request = https.request(url, options, function(response){
+        
+        if (response.statusCode === 200) {
+            res.sendFile(__dirname + "/success.html");
+        } else {
+            res.sendFile(__dirname + "/failure.html");
+        }
+
+
         response.on("data", function(data){
-            console.log(JSON.parse(data));
+            console.log(jsonData);
         })
     });
 
@@ -60,40 +68,13 @@ app.post("/", function(req, res){
 })
 
 
+app.post("/failure", function(req, res) {
+    res.redirect("/");
+})
 
 
-
-
-app.listen(process.env.pORT || 3000, function(){
+app.listen(process.env.PORT || 3000, function(){
     console.log("server is running on port 3000");
     
     
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// res.on("data", function(data){
-//     const parse = JSON.parse(data);
-//     console.log(parse);
-// })
